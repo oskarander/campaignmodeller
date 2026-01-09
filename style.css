@@ -1,103 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-    --val: 0%;
+    --brand-yellow: #eab308;
+    --brand-indigo: #4338ca;
 }
 
 body {
     font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.input-num {
-    width: 4rem;
-    background-color: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
-    text-align: center;
-    font-weight: 700;
-    color: #334155;
-    outline: none;
-    transition: all 0.2s;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-.input-num:focus {
-    border-color: #6366f1;
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
 }
 
-.share-pill {
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px solid transparent;
-    transition: all 0.2s;
-    cursor: default;
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
 }
 
-.valid {
-    background-color: #f0fdf4;
-    color: #15803d;
-    border-color: #bbf7d0;
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
-.invalid {
-    background-color: #fef2f2;
-    color: #dc2626;
-    border-color: #fecaca;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* Premium Card Transitions */
+.card-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .5; }
-}
-
-input[type=range].sr-slider {
-    width: 100%;
-    height: 0.75rem;
-    background-color: #e2e8f0;
-    border-radius: 0.5rem;
-    appearance: none;
-    cursor: pointer;
-    background-image: linear-gradient(to right, #4f46e5 0%, #4f46e5 var(--val), #94a3b8 var(--val), #94a3b8 100%);
-}
-
-input[type=range].sr-slider::-webkit-slider-thumb {
-    width: 1.25rem;
-    height: 1.25rem;
-    background-color: white;
-    border: 2px solid #4f46e5;
-    border-radius: 50%;
-    appearance: none;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-}
-
-/* Premium touches */
-header {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-header::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.1), transparent);
-    pointer-events: none;
-}
-
-.card-hover {
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card-hover:hover {
+.card-transition:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    box-shadow: 0 12px 20px -5px rgb(0 0 0 / 0.1);
+}
+
+/* Custom Slider Styling */
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    background: #e2e8f0;
+    height: 6px;
+    border-radius: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -5px;
+    /* Centers thumb on the track */
+    background-color: white;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    transition: transform 0.1s;
+}
+
+input[type=range]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Input Focus States */
+input:focus,
+select:focus {
+    box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.2);
+    border-color: var(--brand-yellow) !important;
 }
