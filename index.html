@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AX Revenue Lab | Strategic Baseline vs Challenger Comparator</title>
+    <meta name="description" content="A professional revenue strategy tool for comparing baseline models with challenger simulations. Analyze transactions, revenue variance, and PAX capacity delta.">
+    
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-slate-50 p-4 md:p-8 font-sans text-slate-900 transition-colors duration-500">
+
+    <div class="max-w-[1600px] mx-auto">
+        <header class="p-8 rounded-2xl shadow-xl mb-6 border-b-4 border-yellow-400 text-white">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end relative z-10">
+                <div class="md:col-span-3">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="bg-yellow-400 text-slate-900 px-3 py-1 rounded font-black italic">AX</span>
+                        <h1 class="text-xl font-black uppercase tracking-tight">Revenue Strategy Lab</h1>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Baseline vs Challenger Comparison</p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="baseTarget" class="text-[10px] font-black text-slate-500 uppercase block mb-1">Total Transactions (Annual)</label>
+                    <input type="number" id="baseTarget" value="1800000" onchange="calculate()"
+                        class="bg-transparent text-2xl font-black text-white border-b border-slate-700 outline-none focus:border-yellow-400 w-full transition-colors">
+                </div>
+
+                <div class="md:col-span-2 border-l border-slate-700 pl-4">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Baseline Revenue</p>
+                    <h2 id="baseYield" class="text-xl font-black text-slate-400">0 SEK</h2>
+                </div>
+
+                <div class="md:col-span-2 border-l border-slate-700 pl-4">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Challenger Revenue</p>
+                    <h2 id="totalYield" class="text-xl font-black text-yellow-400">0 SEK</h2>
+                </div>
+
+                <div class="md:col-span-3 border-l border-slate-700 pl-8">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Incremental Profit</p>
+                    <h2 id="netYield" class="text-3xl font-black text-green-400">0 SEK</h2>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 card-hover">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Revenue Variance</p>
+                    <h4 id="revVar" class="text-2xl font-black text-slate-800">0.0%</h4>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 card-hover">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Incremental Flex Rev</p>
+                    <h4 id="flexRevTotal" class="text-2xl font-black text-indigo-600">0 SEK</h4>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 card-hover">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Baseline PAX</p>
+                    <h4 id="basePaxDisplay" class="text-2xl font-black text-slate-800">0</h4>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-xl card-hover">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-2">PAX Capacity Delta</p>
+                    <h4 id="paxDelta" class="text-2xl font-black text-white">0</h4>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+                <div class="grid grid-cols-12 bg-slate-800 text-white text-[10px] font-black uppercase tracking-widest py-4 px-6 items-center">
+                    <div class="col-span-3">Product / Price</div>
+                    <div class="col-span-3 px-6 border-l border-slate-700 flex justify-between items-center">
+                        <span>Baseline Model (Tx Share)</span>
+                        <div id="baseCheck" class="share-pill">Share: 0%</div>
+                    </div>
+                    <div class="col-span-6 px-6 border-l border-slate-700 flex justify-between items-center">
+                        <span>Challenger Simulation (Tx Share)</span>
+                        <div class="flex gap-4 items-center flex-wrap">
+                            <div id="chalCheck" class="share-pill">Share: 0%</div>
+                            <span class="lowercase text-indigo-300">Flex: <input type="number" id="flexPrice" value="60"
+                                    onchange="calculate()"
+                                    class="bg-transparent border-b border-indigo-300 w-8 text-center outline-none focus:border-white transition-all">
+                                SEK</span>
+                            <span class="lowercase text-red-300">Ret-Disc: <input type="number" id="retDisc" value="10"
+                                    onchange="calculate()"
+                                    class="bg-transparent border-b border-red-300 w-8 text-center outline-none focus:border-white transition-all"> %</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divide-y divide-slate-100" id="mainGrid">
+                    <!-- JS Powered Content -->
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+                <h3 class="text-xs font-black uppercase text-slate-400 mb-6 tracking-widest">Calculation Methodology</h3>
+                <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
+                    <p><strong>1. Blended Price:</strong> Weighted average price based on the Single vs. Return split.
+                        <code class="block bg-slate-50 p-2 mt-1 rounded font-bold text-indigo-600">Price = (SingleRate × S_Price) + (ReturnRate × R_Price × DiscountMultiplier)</code>
+                    </p>
+
+                    <p><strong>2. Transaction Model:</strong> Shares are now applied to the Total Transaction count, not Revenue.
+                        <code class="block bg-slate-50 p-2 mt-1 rounded font-bold text-indigo-600">Trans = Total_Transactions × (Share% / 100)</code>
+                        <code class="block bg-slate-50 p-2 mt-1 rounded font-bold text-indigo-600">Revenue = Trans × Price</code>
+                    </p>
+
+                    <p><strong>3. PAX (Boardings):</strong>
+                        <code class="block bg-slate-50 p-2 mt-1 rounded font-bold text-indigo-600">PAX = Trans × Size × (1 + ReturnRate)</code>
+                        (Note: ReturnRate 100% means 2 trips per transaction)
+                    </p>
+                </div>
+            </div>
+            <div class="border-l border-slate-100 pl-8">
+                <h3 class="text-xs font-black uppercase text-slate-400 mb-6 tracking-widest">Campaign Logic</h3>
+                <p class="text-xs text-slate-500 italic mb-4">
+                    The "Return Discount" campaign is applied exclusively to the return portion of Challenger pricing.
+                    The "Flex Upsell" is calculated as a transaction-level premium.
+                </p>
+                <div class="bg-slate-50 p-6 rounded-xl text-center border border-dashed border-slate-200">
+                    <p class="text-sm font-bold text-slate-700 uppercase italic">Revenue Assistant: Transaction-Based Logic</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Core Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

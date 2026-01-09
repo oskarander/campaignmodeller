@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+:root {
+    --val: 0%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.input-num {
+    width: 4rem;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    text-align: center;
+    font-weight: 700;
+    color: #334155;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.input-num:focus {
+    border-color: #6366f1;
+}
+
+.share-pill {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    cursor: default;
+}
+
+.valid {
+    background-color: #f0fdf4;
+    color: #15803d;
+    border-color: #bbf7d0;
+}
+
+.invalid {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border-color: #fecaca;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+}
+
+input[type=range].sr-slider {
+    width: 100%;
+    height: 0.75rem;
+    background-color: #e2e8f0;
+    border-radius: 0.5rem;
+    appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(to right, #4f46e5 0%, #4f46e5 var(--val), #94a3b8 var(--val), #94a3b8 100%);
+}
+
+input[type=range].sr-slider::-webkit-slider-thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: white;
+    border: 2px solid #4f46e5;
+    border-radius: 50%;
+    appearance: none;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Premium touches */
+header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.1), transparent);
+    pointer-events: none;
+}
+
+.card-hover {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
